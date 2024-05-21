@@ -16,7 +16,7 @@ users = {
     "john.sheridan@babylon5.universe": "ROLE_SUPER_ADMIN",
 }
 
-def create_users(users: Dict[str, str], api_client):
+def create_users(users: Dict[str, str], api_client: ApiClient):
    api_instance = UsersApi(api_client)
    for username, role in users.items():
      user_api_response = api_instance.create_user(
