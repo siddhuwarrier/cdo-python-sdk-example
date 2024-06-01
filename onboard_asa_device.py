@@ -12,6 +12,7 @@ from cdo_sdk_python import (
 )
 
 from cdo_api import execute_using_cdo_api
+from transactions_api import wait_for_transaction_to_finish
 
 
 @click.command()
@@ -94,27 +95,7 @@ def onboard_asa_device(
         )
     )
 
-    transaction_api_instance = TransactionsApi(api_client)
-    while (
-        cdo_transaction.cdo_transaction_status != "DONE"
-        and cdo_transaction.cdo_transaction_status != "ERROR"
-    ):
-        cdo_transaction = transaction_api_instance.get_transaction(
-            cdo_transaction.transaction_uid
-        )
-        print(f"CDO transaction status: {cdo_transaction.cdo_transaction_status}")
-        time.sleep(3)
-
-    if cdo_transaction.cdo_transaction_status == "ERROR":
-        print(
-            f"Error onboarding ASA device {cdo_transaction.entity_uid}: {cdo_transaction.error_message}"
-        )
-        sys.exit(1)
-    else:
-        print(
-            f"Onboarding ASA device completed. Device UID: {cdo_transaction.entity_uid}"
-        )
-
+    wait_for_transaction_to_finish(cdo_transaction, api_client)
 
 if __name__ == "__main__":
     onboard_asa_command()

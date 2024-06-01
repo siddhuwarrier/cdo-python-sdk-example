@@ -1,2 +1,3 @@
 cdo-sdk-python
 click
+paramiko
