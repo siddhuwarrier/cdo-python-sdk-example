@@ -8,7 +8,6 @@ from cdo_sdk_python import (
     InventoryApi,
     CdoTransaction,
     AsaCreateOrUpdateInput,
-    TransactionsApi,
 )
 
 from cdo_api import execute_using_cdo_api
